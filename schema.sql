@@ -1,0 +1,8 @@
+CREATE DATABASE IF NOT EXISTS stockmarket;
+
+USE stockmarket;
+
+CREATE TABLE stocks (
+  id int NOT NUll AUTO_INCREMENT,
+  PRIMARY KEY (id)
+)ENGINE = INNODB;
