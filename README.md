@@ -1,1 +1,3 @@
 # soloweek
+
+# USING API: Tradier 
