@@ -3,7 +3,7 @@ var SRC_DIR = path.join(__dirname, '/frontend/src');  //
 var DIST_DIR = path.join(__dirname, '/frontend/dist');  //bundle in dist with index.html
 
 module.exports = {
-  entry: `${SRC_DIR}/home.jsx`,
+  entry: `${SRC_DIR}/Home.jsx`,
   output: {
     filename: 'bundle.js',
     path: DIST_DIR  //path to distributed files
