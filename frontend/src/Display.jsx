@@ -13,21 +13,36 @@ class Display extends React.Component {
     return (
       <div className='display'>
         <div className='stock'>
-          <div className='info'>Symbol</div>
-          <div className='info'>Description</div>
-          <div className='info'>Ask Price</div>
-          <div className='info'>Bid Price</div>
-          <div className='info'>Volume</div>
-          <div className='info'>Average Volume</div>
+          <div className='head'>Symbol</div>
+          <div className='head'>Description</div>
+          <div className='head'>Ask Price</div>
+          <div className='head'>Bid Price</div>
+          <div className='head'>Volume</div>
+          <div className='head'>Average Volume</div>
         </div>
         {
           this.props.data.map((stock, i) => {
-            <div className='stock'>
-              <div className='info'></div>
-              <div className='info'></div>
-              <div className='info'></div>
-              <div className='info'></div>
-            </div>
+            return (
+              (i === this.props.data.length-1) 
+              ? 
+              (<div className='stock' key={i}>
+                <div className='infoend'> {stock.symbol} </div>
+                <div className='infoend'> {stock.description} </div>
+                <div className='infoend'> {stock.ask || `null`} </div>
+                <div className='infoend'> {stock.bid || `null`} </div>
+                <div className='infoend'> {stock.volume} </div>
+                <div className='infoend'> {stock.average_volume} </div>
+              </div>)
+              :
+              (<div className='stock' key={i}>
+                <div className='info'> {stock.symbol} </div>
+                <div className='info'> {stock.description} </div>
+                <div className='info'> {stock.ask || `null`} </div>
+                <div className='info'> {stock.bid || `null`} </div>
+                <div className='info'> {stock.volume} </div>
+                <div className='info'> {stock.average_volume} </div>
+              </div>)
+            )
           })
         }
       </div>
@@ -37,6 +52,19 @@ class Display extends React.Component {
 
 export default Display;
 
+//            TWO DISPLAYS, table format and ticket format. option to see one or the other
+//IDEAS make description something that appears on hover instead of taking all that space? 
+  //qualities that can pop up from an "MORE DETAILS" button;
+    //ask date
+    //bid date
+    //volume date
+    //average_volume date
+    //change
+    //change_percentage
+
+
+
+          //DAAAAATTEEEEEEEE
 
 // var date = new Date(x);
 // var hour = date.getHours();

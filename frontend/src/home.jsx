@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
+import Display from './Display.jsx';
 
 class Home extends React.Component {
   constructor (props) {
@@ -25,6 +26,7 @@ class Home extends React.Component {
   render () {
     return (
       <div>
+        <div className='title'>Step Towards Paying Off HR</div>
         <Display data={this.state.data}/>
       </div>
     )
