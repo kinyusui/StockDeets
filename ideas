@@ -1,0 +1,14 @@
+
+stream live data
+https://developer.tradier.com/documentation/markets/create-events-session
+  data:
+    stream: 
+      sessionid:
+      url:
+        ATT_BLOCK:
+        TEXT:
+
+
+// search function
+// A stock page that renders for a specific stock
+// watchlist

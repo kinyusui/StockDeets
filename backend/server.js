@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
-const axios = require('axios');
+const axios = require('axios'); //automatically transforms JSON data
 const config = require('./config.js');
 const key = config.ACCESSTOKEN;
 // const session = require('express-session'); worry about login at the end
@@ -22,7 +22,7 @@ app.use(express.static(__dirname + '/../frontend/dist'));
 // and also __dirname + '/'   the link must start with /   or else nodemon won't work;
 
 
-app.post(`/markets`, function(req, res) {
+app.post(`/markets`, (req, res) => {
   console.log('got client side request ', req.body)
   var symbols = req.body.symbols.splice(1,3);
   axios({
@@ -34,7 +34,7 @@ app.post(`/markets`, function(req, res) {
       Authorization: `Bearer ${key}`
     }
   })
-  .then((result) => {
+  .then(result => {
     console.log(result);
     res.send(result.data);
   })
@@ -43,6 +43,25 @@ app.post(`/markets`, function(req, res) {
     res.end();
   })
 });
+
+app.post(`/stream`, (req, res) => {
+  axios({
+    method: 'POST',
+    url: `https://sandbox.tradier.com/v1/markets/events/session`,
+    headers: {
+      Accept: `application/json`,
+      Authorization: `Bearer ${key}`
+    }
+  })
+  .then(result => {
+    console.log('stream ',result);
+    res.send(result.data);
+  })
+  .catch(err => {
+    console.log(err);
+    res.end();
+  })
+})
 
 
 

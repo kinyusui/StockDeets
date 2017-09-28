@@ -1,0 +1,3 @@
+TypeError: Converting circular structure to JSON
+  catch err;
+  happens when sending result instead of result.data

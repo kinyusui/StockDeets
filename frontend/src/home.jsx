@@ -8,7 +8,8 @@ class Home extends React.Component {
     super(props);
     this.state = {
       symbols: ["TSLA", "ATVI", "SNE", "SSNLF", "GRUB", "NVDA", "AMD", "INTC", "AMZN", "GOOGL", "GOOG", "IBM", "MBLY", "MSFT", "CRM", "IMMU", "OPNT", "HTHT"],
-      data: []
+      data: [],
+      stream: []
     }
   }
   componentDidMount () {
@@ -17,11 +18,17 @@ class Home extends React.Component {
     })
     .then((result) => {
       console.log('home.jsx result is ', result.data.quotes.quote);
-      //quotes: quote
       this.setState({
         data: result.data.quotes.quote
       })
     })
+
+    // axios.post('/stream')
+    // .then(result => {
+    //   this.setState({
+    //     stream: result.stream
+    //   })
+    // })
   }
   render () {
     return (
@@ -35,6 +42,9 @@ class Home extends React.Component {
 
 ReactDom.render(<Home/>, document.getElementById('Home'));
 
+// search function
+// A stock page that renders for a specific stock
+// watchlist
 
 
 //["TSLA", "ATVI", " UBI", "SNE", "SSNLF", "GRUB", "NVDA", "AMD", "INTC", "AMZN", "GOOGL", "GOOG", "IBM", "MBLY", "MSFT", "CRM", "IMMU", "OPNT", "HTHT"]

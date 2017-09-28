@@ -1,50 +1,39 @@
 import React from 'react';
+import Chart from './Chart.jsx';
+import Ticket from './Ticket.jsx';
 import { Col } from 'react-bootstrap';
 
 class Display extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-
+      display: 'Chart'
     }
+    this.changeDisplay = this.changeDisplay.bind(this);
+  }
+
+  changeDisplay (e) {
+    event.preventDefault();
+    var newDisplay;
+    this.state.display === 'Chart' ? newDisplay = 'Ticket' : newDisplay = 'Chart';
+    this.setState({
+      display: newDisplay
+    })
   }
 
   render () {
     return (
-      <div className='display'>
-        <div className='stock'>
-          <div className='head'>Symbol</div>
-          <div className='head'>Description</div>
-          <div className='head'>Ask Price</div>
-          <div className='head'>Bid Price</div>
-          <div className='head'>Volume</div>
-          <div className='head'>Average Volume</div>
-        </div>
-        {
-          this.props.data.map((stock, i) => {
-            return (
-              (i === this.props.data.length-1) 
-              ? 
-              (<div className='stock' key={i}>
-                <div className='infoend'> {stock.symbol} </div>
-                <div className='infoend'> {stock.description} </div>
-                <div className='infoend'> {stock.ask || `null`} </div>
-                <div className='infoend'> {stock.bid || `null`} </div>
-                <div className='infoend'> {stock.volume} </div>
-                <div className='infoend'> {stock.average_volume} </div>
-              </div>)
-              :
-              (<div className='stock' key={i}>
-                <div className='info'> {stock.symbol} </div>
-                <div className='info'> {stock.description} </div>
-                <div className='info'> {stock.ask || `null`} </div>
-                <div className='info'> {stock.bid || `null`} </div>
-                <div className='info'> {stock.volume} </div>
-                <div className='info'> {stock.average_volume} </div>
-              </div>)
-            )
-          })
-        }
+      <div className='display'> 
+        <div className='marketTitle'>Market Data Display: {this.state.display}</div>
+        <button className='changeDisplay' type='button' onClick={this.changeDisplay} value='Change Display'>
+          Change Display
+        </button>
+      {
+        (this.state.display === 'Chart') ?
+        (<Chart data={this.props.data}/>)
+        :
+        (<Ticket data={this.props.data}/>)
+      }
       </div>
     )
   }
