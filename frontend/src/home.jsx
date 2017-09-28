@@ -15,15 +15,17 @@ class Home extends React.Component {
       symbols: this.state.symbols
     })
     .then((result) => {
-      console.log('home.jsx result is ', result);
+      console.log('home.jsx result is ', result.data.quotes.quote);
+      //quotes: quote
       this.setState({
-        data: result.data
+        data: result.data.quotes.quote
       })
     })
   }
   render () {
     return (
-      <div>{this.state.symbols}
+      <div>
+        <Display data={this.state.data}/>
       </div>
     )
   }
