@@ -15,12 +15,12 @@ class Ticket extends React.Component {
           this.props.data.map((stock, i) => {
             return (
               <div className='ticket' key={i}>
-                <div className='ticketInfo'> {stock.symbol} </div>
-                <div className='ticketInfo'> {stock.description} </div>
-                <div className='ticketInfo'> {stock.ask || `null`} </div>
-                <div className='ticketInfo'> {stock.bid || `null`} </div>
-                <div className='ticketInfo'> {stock.volume} </div>
-                <div className='ticketInfo'> {stock.average_volume} </div>
+                <div className='ticketInfo'> Symbol: {stock.symbol} </div>
+                <div className='ticketInfo'> Description: {stock.description} </div>
+                <div className='ticketInfo'> Ask: {stock.ask || `null`} </div>
+                <div className='ticketInfo'> Bid: {stock.bid || `null`} </div>
+                <div className='ticketInfo'> Vol: {stock.volume} </div>
+                <div className='ticketInfo'> Avg Vol: {stock.average_volume} </div>
               </div>
             )
           })

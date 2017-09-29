@@ -8,6 +8,9 @@ https://developer.tradier.com/documentation/markets/create-events-session
         ATT_BLOCK:
         TEXT:
 
+nodemon --inspect won't work if static files isn't served as (__dirname + '/somepathtosomefile');
+
+
 
 // search function
 // A stock page that renders for a specific stock

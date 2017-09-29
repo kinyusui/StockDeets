@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
 import Display from './Display.jsx';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class Home extends React.Component {
   constructor (props) {
@@ -9,7 +10,8 @@ class Home extends React.Component {
     this.state = {
       symbols: ["TSLA", "ATVI", "SNE", "SSNLF", "GRUB", "NVDA", "AMD", "INTC", "AMZN", "GOOGL", "GOOG", "IBM", "MBLY", "MSFT", "CRM", "IMMU", "OPNT", "HTHT"],
       data: [],
-      stream: []
+      stream: [],
+      searchTerm: ''
     }
   }
   componentDidMount () {
@@ -30,11 +32,25 @@ class Home extends React.Component {
     //   })
     // })
   }
+
   render () {
     return (
-      <div>
+      <div> 
         <div className='title'>Step Towards Paying Off HR</div>
-        <Display data={this.state.data}/>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='/'
+              render={ () => (
+                <Display data={this.state.data}/>
+              )}
+            />
+            <Route path='/search'
+              render={  () => (
+                <Search/>
+              )}
+            />
+          </Switch>
+        </BrowserRouter>
       </div>
     )
   }
