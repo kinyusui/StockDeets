@@ -23,8 +23,13 @@ app.use(express.static(__dirname + '/../frontend/dist'));
 
 
 app.post(`/markets`, (req, res) => {
-  console.log('got client side request ', req.body)
-  var symbols = req.body.symbols.splice(1,3);
+  //console.log('got client side request ', req.body)
+  if (Array.isArray(req.body.symbols)) {
+    var symbols = req.body.symbols.splice(1,3);
+  } else {
+    var symbols = req.body.symbols;
+  }
+  //console.log('symbols is ',symbols);
   axios({
     method: 'GET',
     url: `https://sandbox.tradier.com/v1/markets/quotes`,

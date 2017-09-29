@@ -1,15 +1,25 @@
 import React from 'react';
 import Chart from './Chart.jsx';
 import Ticket from './Ticket.jsx';
-import { Col } from 'react-bootstrap';
+import { Col, FormGroup, FormControl } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class Display extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      display: 'Chart'
+      display: 'Chart',
+      searchTerm: ''
     }
+    this.updateSearchTerm = this.updateSearchTerm.bind(this);
     this.changeDisplay = this.changeDisplay.bind(this);
+  }
+
+  updateSearchTerm (e) {
+    var term = e.target.value;
+    this.setState({
+      searchTerm: term
+    })
   }
 
   changeDisplay (e) {
@@ -25,6 +35,16 @@ class Display extends React.Component {
     return (
       <div className='display'> 
         <div className='marketTitle'>Market Data Display: {this.state.display}</div>
+        <FormGroup>
+          <FormControl type='text' placeholder='Enter a search term!' value={this.state.seachTerm} onChange={this.updateSearchTerm}/>
+        </FormGroup>{' '}
+        <Link to='/search'>
+          <button type="button" onClick={ (event) => {
+            this.props.sendSearch(this.state.searchTerm);
+          }}>
+            Search
+          </button>
+        </Link>
         <button className='changeDisplay' type='button' onClick={this.changeDisplay} value='Change Display'>
           Change Display
         </button>

@@ -1,3 +1,8 @@
 TypeError: Converting circular structure to JSON
   catch err;
   happens when sending result instead of result.data
+
+
+searchTerm was mispelled as seachTerm
+rendered searchTerm as undefined and subsequent request to fail
+  -use inspect console and client console more for debugging, forgot about them after a while

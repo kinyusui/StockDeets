@@ -16,7 +16,7 @@ class Chart extends React.Component {
           <div className='head'>Ask Price</div>
           <div className='head'>Bid Price</div>
           <div className='head'>Volume</div>
-          <div className='head'>Average Volume</div>
+          <div className='headend'>Average Volume</div>
         </div>
         {
           this.props.data.map((stock, i) => {
@@ -29,7 +29,7 @@ class Chart extends React.Component {
                 <div className='infoend'> {stock.ask || `null`} </div>
                 <div className='infoend'> {stock.bid || `null`} </div>
                 <div className='infoend'> {stock.volume} </div>
-                <div className='infoend'> {stock.average_volume} </div>
+                <div className='infoended'> {stock.average_volume} </div>
               </div>)
               :
               (<div className='stock' key={i}>
@@ -38,7 +38,7 @@ class Chart extends React.Component {
                 <div className='info'> {stock.ask || `null`} </div>
                 <div className='info'> {stock.bid || `null`} </div>
                 <div className='info'> {stock.volume} </div>
-                <div className='info'> {stock.average_volume} </div>
+                <div className='infoed'> {stock.average_volume} </div>
               </div>)
             )
           })

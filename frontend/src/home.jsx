@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import axios from 'axios';
 import Display from './Display.jsx';
+import Search from './Search.jsx';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class Home extends React.Component {
@@ -13,6 +14,7 @@ class Home extends React.Component {
       stream: [],
       searchTerm: ''
     }
+    this.sendSearch = this.sendSearch.bind(this);
   }
   componentDidMount () {
     axios.post('/markets', {
@@ -33,6 +35,13 @@ class Home extends React.Component {
     // })
   }
 
+  sendSearch (searchTerm) {
+    //console.log('searchTerm ', searchTerm)
+    this.setState({
+      searchTerm: searchTerm
+    })
+  }
+
   render () {
     return (
       <div> 
@@ -41,12 +50,12 @@ class Home extends React.Component {
           <Switch>
             <Route exact path='/'
               render={ () => (
-                <Display data={this.state.data}/>
+                <Display data={this.state.data} sendSearch={this.sendSearch}/>
               )}
             />
             <Route path='/search'
               render={  () => (
-                <Search/>
+                <Search searchTerm={this.state.searchTerm}/>
               )}
             />
           </Switch>
