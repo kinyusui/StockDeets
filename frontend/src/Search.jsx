@@ -56,10 +56,10 @@ class Search extends React.Component {
       var chart = c3.generate({
         bindto: '#chart',
         data: {
-          x: 'time',
+          x: 'x',
           xFormat: '%H:%M',
           columns: [
-            ['time', ...this.state.time],
+            ['x', ...this.state.time],
             ['high', ...this.state.high],
             ['low', ...this.state.low]
           ],
@@ -69,6 +69,9 @@ class Search extends React.Component {
           }
         },
         axis: {
+          label: {
+            text: 'Time'
+          },
           x: {
             type: 'timeseries',
             tick: {
@@ -97,19 +100,25 @@ class Search extends React.Component {
           </button>
         </Link>
         <br/>
-        <button type='button' onClick={(e) => {
-          e.preventDefault();
-          this.props.watchListAdd(this.state.stock.symbol)
-        }}>
-          Add To Watchlist
-        </button>
+        <div className='addDeleteContainer'>
+          <button type='button'
+            className='addToWatchList' 
+            onClick={(e) => {
+              e.preventDefault();
+              this.props.watchListAdd(this.state.stock.symbol)
+            }}>
+            Add To Watchlist
+          </button>
 
-        <button type='button' onClick={(e) => {
-          e.preventDefault();
-          this.props.watchListDelete(this.state.stock.symbol)
-        }}>
-          Delete From Watchlist
-        </button>
+          <button type='button'
+            className='deleteFromWatchList' 
+            onClick={(e) => {
+              e.preventDefault();
+              this.props.watchListDelete(this.state.stock.symbol)
+            }}>
+            Delete From Watchlist
+          </button>
+        </div>
         <br/>
         <div id='chart'>No Chart Yet</div>
         {infos}
