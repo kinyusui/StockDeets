@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Ticket extends React.Component {
   constructor (props) {
@@ -7,15 +8,25 @@ class Ticket extends React.Component {
 
     }
   }
-  
+
   render () {
     return (
-      <div>
+      <div className='ticketContainer'>
+        <br/>
         {
           this.props.data.map((stock, i) => {
             return (
               <div className='ticket' key={i}>
-                <div className='ticketInfo'> Symbol: {stock.symbol} </div>
+                <div className='ticketInfo'> 
+                  <Link to='/search' className='linkToStock'>
+                    <button type='button'
+                      className='stockNameButton' 
+                      value={stock.symbol} 
+                      onClick={(e)=>{
+                        this.props.sendSearch(e.target.value);
+                      }}>Symbol: {stock.symbol}</button>
+                  </Link>  
+                </div>
                 <div className='ticketInfo'> Description: {stock.description} </div>
                 <div className='ticketInfo'> Ask: {stock.ask || `null`} </div>
                 <div className='ticketInfo'> Bid: {stock.bid || `null`} </div>

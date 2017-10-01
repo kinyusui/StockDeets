@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Chart extends React.Component {
   constructor (props) {
@@ -11,7 +12,9 @@ class Chart extends React.Component {
     return (
       <div className='table'>
         <div className='stock'>
-          <div className='head'>Symbol</div>
+          <div className='head'>Symbol <br/>
+            (click buttons below for details)
+          </div>
           <div className='head'>Description</div>
           <div className='head'>Ask Price</div>
           <div className='head'>Bid Price</div>
@@ -24,7 +27,16 @@ class Chart extends React.Component {
               (i === this.props.data.length-1) 
               ? 
               (<div className='stock' key={i}>
-                <div className='infoend'> {stock.symbol} </div>
+                <div className='infoend'> 
+                  <Link to='/search' className='linkToStock'>
+                    <button type='button'
+                      className='stockNameButton' 
+                      value={stock.symbol} 
+                      onClick={(e)=>{
+                        this.props.sendSearch(e.target.value);
+                      }}>{stock.symbol}</button>
+                  </Link> 
+                </div>
                 <div className='infoend'> {stock.description} </div>
                 <div className='infoend'> {stock.ask || `null`} </div>
                 <div className='infoend'> {stock.bid || `null`} </div>
@@ -33,7 +45,17 @@ class Chart extends React.Component {
               </div>)
               :
               (<div className='stock' key={i}>
-                <div className='info'> {stock.symbol} </div>
+                <div className='info'> 
+                  
+                  <Link to='/search' className='linkToStock'>
+                    <button type='button'
+                      className='stockNameButton' 
+                      value={stock.symbol} 
+                      onClick={(e)=>{
+                        this.props.sendSearch(e.target.value);
+                      }}>{stock.symbol}</button>
+                  </Link> 
+                </div>
                 <div className='info'> {stock.description} </div>
                 <div className='info'> {stock.ask || `null`} </div>
                 <div className='info'> {stock.bid || `null`} </div>

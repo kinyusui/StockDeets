@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS stocks (
 
 CREATE TABLE IF NOT EXISTS watches (
   id int NOT NULL AUTO_INCREMENT,
+  stockSymbol varchar(10) NOT NULL,
+  UNIQUE KEY (stockSymbol),
   PRIMARY KEY (id)
 )ENGINE = INNODB;
 

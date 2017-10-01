@@ -8,7 +8,7 @@ class Display extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      display: 'Chart',
+      display: props.display,
       searchTerm: ''
     }
     this.updateSearchTerm = this.updateSearchTerm.bind(this);
@@ -23,9 +23,10 @@ class Display extends React.Component {
   }
 
   changeDisplay (e) {
-    event.preventDefault();
+    e.preventDefault();
     var newDisplay;
     this.state.display === 'Chart' ? newDisplay = 'Ticket' : newDisplay = 'Chart';
+    this.props.changeHomeDisplay(newDisplay, 'display');
     this.setState({
       display: newDisplay
     })
@@ -36,7 +37,10 @@ class Display extends React.Component {
       <div className='display'> 
         <div className='marketTitle'>Market Data Display: {this.state.display}</div>
         <FormGroup>
-          <FormControl type='text' placeholder='Enter a search term!' value={this.state.seachTerm} onChange={this.updateSearchTerm}/>
+          <FormControl type='text' 
+            placeholder='Enter a search term!' 
+            value={this.state.seachTerm} 
+            onChange={this.updateSearchTerm}/>
         </FormGroup>{' '}
         <Link to='/search'>
           <button type="button" onClick={ (event) => {
@@ -45,14 +49,21 @@ class Display extends React.Component {
             Search
           </button>
         </Link>
-        <button className='changeDisplay' type='button' onClick={this.changeDisplay} value='Change Display'>
-          Change Display
-        </button>
+        <div className='rowOfButtons'>
+          <button className='changeDisplay' type='button' onClick={this.changeDisplay} value='Change Display'>
+            Change Display Style
+          </button>
+          <Link to='/watch'>
+            <button className='toWatchList' type="button">
+              Watchlist
+            </button>
+          </Link>
+        </div>
       {
         (this.state.display === 'Chart') ?
-        (<Chart data={this.props.data}/>)
+        (<Chart data={this.props.data} sendSearch={this.props.sendSearch}/>)
         :
-        (<Ticket data={this.props.data}/>)
+        (<Ticket data={this.props.data} sendSearch={this.props.sendSearch}/>)
       }
       </div>
     )

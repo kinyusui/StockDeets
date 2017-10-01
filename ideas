@@ -1,3 +1,6 @@
+import c3js
+  bower install c3
+
 
 stream live data
 https://developer.tradier.com/documentation/markets/create-events-session

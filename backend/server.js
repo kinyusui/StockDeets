@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const axios = require('axios'); //automatically transforms JSON data
 const config = require('./config.js');
+const db = require('./mysql/mysql.js');
 const key = config.ACCESSTOKEN;
 // const session = require('express-session'); worry about login at the end
 
@@ -24,12 +25,8 @@ app.use(express.static(__dirname + '/../frontend/dist'));
 
 app.post(`/markets`, (req, res) => {
   //console.log('got client side request ', req.body)
-  if (Array.isArray(req.body.symbols)) {
-    var symbols = req.body.symbols.splice(1,3);
-  } else {
-    var symbols = req.body.symbols;
-  }
-  //console.log('symbols is ',symbols);
+  var symbols = req.body.symbols;
+  console.log('symbols is ',symbols);
   axios({
     method: 'GET',
     url: `https://sandbox.tradier.com/v1/markets/quotes`,
@@ -68,8 +65,52 @@ app.post(`/stream`, (req, res) => {
   })
 })
 
+app.get('/watchList', (req, res) => {
+  db.getWatchList(result => {
+    var symbols = result.map(stock => stock.stockSymbol);
+    res.send(symbols);
+  })
+})
 
+app.post('/watchListAdd', (req, res) => {
+  var stock = req.body.stock;
+  console.log('server.js line 77',req,stock);
+  db.addToWatchList(stock, result => {
+    res.send(result);
+  })
+})
 
+app.post('/watchListDelete', (req, res) => {
+  var stock = req.body.stock;
+  db.removeFromWatchList(stock, result => {
+    res.send(result);
+  })
+})
+
+app.post('/liveSales', (req, res) => {
+  var params = {};
+  for (var key in req.body) {
+    params[key] = req.body.key;
+  }
+
+  axios({
+    method: 'GET',
+    url: `https://sandbox.tradier.com/v1/markets/timesales`,
+    params: params,
+    headers: {
+      Accept: `application/json`,
+      Authorization: `Bearer ${key}`
+    }
+  })
+  .then(result => {
+    console.log('timesales result ',result);
+    res.send(result.series.data);
+  })
+  .catch(err => {
+    console.log('line 109 err', err);
+    return;
+  })
+})
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
