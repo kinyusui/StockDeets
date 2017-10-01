@@ -6,11 +6,16 @@ class Search extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      stock: ''
+      stock: '',
+      time: [],
+      high: [],
+      low: []
     }
   }
   componentDidMount () {
     //console.log('this.props.searchTerm ', this.props.searchTerm);
+    var today = new Date().toISOString().substring(0,16);
+    var start = today.substring(0,11) + '09:30';
     axios.post(`/markets`, {
       symbols: this.props.searchTerm
     })
@@ -21,33 +26,64 @@ class Search extends React.Component {
       })
     })
 
-    var today = new Date().toISOString().substring(0,16);
-    var start = today.subString(0,11) + '09:30';
-    axios.post(`/timeSales `, {
-      symbol: this.stock.symbol,
+
+    axios.post(`/liveSales`, {
+      symbol: this.props.searchTerm,
       start: start,
       end: today,
-      interval: `1min`
+      interval: `5min`
     })
     .then(result => {
-      var time = result.map(block => block.time)
+      var data = result.data;
+      //var time = data.map(block => block.time.substring(11,16));
+      var time = data.map(block => block.time);
+      var high = data.map(block => block.high);
+      var low = data.map(block => block.low);
+      
+      var xaxis = [];
+      for (var i = 0; i < time.length; i+=6) {
+        xaxis.push(time[i]);
+      }
+      this.setState({
+        time: time,
+        high: high,
+        low: low,
+        xaxis: xaxis
+      });
+    })
+    .then(result => {
+      console.log(this.state);
+      var chart = c3.generate({
+        bindto: '#chart',
+        data: {
+          x: 'time',
+          xFormat: '%H:%M',
+          columns: [
+            ['time', ...this.state.time],
+            ['high', ...this.state.high],
+            ['low', ...this.state.low]
+          ],
+          colors: {
+            high: 'blue',
+            low: 'red'
+          }
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              format: '%H:%M',
+              values: [...this.state.xaxis]
+            }
+          }
+        }
+      });
     })
   }
 
 
 
   render () {
-    // var chart = c3.generate({
-    //   data: {
-    //     x: 'x',
-    //     columns: [
-    //       ['x', 30, 50, 100, 230, 300, 310],
-    //       ['data1', 30, 200, 100, 400, 150, 250],
-    //       ['data2', 130, 300, 200, 300, 250, 450]
-    //     ]
-    //   }
-    // });
-
     var infos = [];
     var stock = this.state.stock;
     for (var key in stock) {
@@ -75,7 +111,7 @@ class Search extends React.Component {
           Delete From Watchlist
         </button>
         <br/>
-        <div id="chart"></div>
+        <div id='chart'>No Chart Yet</div>
         {infos}
       </div>
     )

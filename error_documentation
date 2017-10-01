@@ -6,3 +6,15 @@ TypeError: Converting circular structure to JSON
 searchTerm was mispelled as seachTerm
 rendered searchTerm as undefined and subsequent request to fail
   -use inspect console and client console more for debugging, forgot about them after a while
+
+
+authorization error when trying to send request to timesales
+  my access key was named 'key' and my 
+    for (var key in req.body) was also key so it overode my access key
+    so I was not authorized;
+
+
+    C3JS c3js
+  pass in time into the graph just as normal .toISOString() format the api 
+will do the rest to extrapolate from that. If you modify it before hand it
+won't understand the modified time;

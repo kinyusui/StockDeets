@@ -46,6 +46,34 @@ app.post(`/markets`, (req, res) => {
   })
 });
 
+app.post('/liveSales', (req, res) => {
+  var params = {};
+  for (var key1 in (req.body)) {
+    params[key1] = req.body[key1];
+  }
+  var testparams = Object.assign({},params);
+  testparams.start = `2017-09-26T09:30`;
+  testparams.end = `2017-09-26T16:00`;
+  //console.log('params ',params, testparams);
+  axios({
+    method: 'GET',
+    url: `https://sandbox.tradier.com/v1/markets/timesales`,
+    params: testparams,// use params on live
+    headers: {
+      Accept: `application/json`,
+      Authorization: `Bearer ${key}`
+    }
+  })
+  .then(result => {
+    console.log('timesales result ',result);
+    res.send(result.data.series.data);
+  })
+  .catch(err => {
+    console.log('line 109 err', err);
+    return;
+  })
+})
+
 app.post(`/stream`, (req, res) => {
   axios({
     method: 'POST',
@@ -84,31 +112,6 @@ app.post('/watchListDelete', (req, res) => {
   var stock = req.body.stock;
   db.removeFromWatchList(stock, result => {
     res.send(result);
-  })
-})
-
-app.post('/liveSales', (req, res) => {
-  var params = {};
-  for (var key in req.body) {
-    params[key] = req.body.key;
-  }
-
-  axios({
-    method: 'GET',
-    url: `https://sandbox.tradier.com/v1/markets/timesales`,
-    params: params,
-    headers: {
-      Accept: `application/json`,
-      Authorization: `Bearer ${key}`
-    }
-  })
-  .then(result => {
-    console.log('timesales result ',result);
-    res.send(result.series.data);
-  })
-  .catch(err => {
-    console.log('line 109 err', err);
-    return;
   })
 })
 
