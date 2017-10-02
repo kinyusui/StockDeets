@@ -10,8 +10,8 @@ class Home extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      symbols: [`TSLA`, `ATVI`, `NVDA`],
-      //["TSLA", "ATVI", "SNE", "SSNLF", "GRUB", "NVDA", "AMD", "INTC", "AMZN", "GOOGL", "GOOG", "IBM", "MBLY", "MSFT", "CRM", "IMMU", "OPNT", "HTHT"],
+      // symbols: [`TSLA`, `ATVI`, `NVDA`],
+      symbols: ["TSLA", "ATVI", "SNE", "SSNLF", "GRUB", "NVDA", "AMD", "INTC", "AMZN", "GOOGL", "GOOG", "IBM", "MBLY", "MSFT", "CRM", "IMMU", "OPNT", "HTHT"],
       data: [],
       stream: [],
       searchTerm: '',

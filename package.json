@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --inspect backend/server.js",
+    "start": "mysql.server start && nodemon --inspect backend/server.js",
     "react": "webpack --watch"
   },
   "repository": {

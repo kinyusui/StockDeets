@@ -3,7 +3,13 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const axios = require('axios'); //automatically transforms JSON data
-const config = require('./config.js');
+const config = require('./config.js') || {
+  ACCESSTOKEN:process.env.ACCESSTOKEN,
+  mysqlConfig: {
+    user: process.env.user,
+    database: process.env.database
+  }
+};
 const db = require('./mysql/mysql.js');
 const key = config.ACCESSTOKEN;
 // const session = require('express-session'); worry about login at the end
